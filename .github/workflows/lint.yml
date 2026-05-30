@@ -1,0 +1,56 @@
+name: Lint
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  php-cs-fixer:
+    name: API (Laravel) — Coding Standards
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cash-flow-api
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.3
+          coverage: none
+
+      - name: Install dependencies
+        run: composer install --no-interaction --prefer-dist
+
+      - name: Check coding style
+        run: |
+          if [ -f .php-cs-fixer.dist.php ] || [ -f .php_cs ]; then
+            vendor/bin/php-cs-fixer fix --dry-run --diff
+          else
+            echo "No PHP CS Fixer config found, skipping."
+          fi
+
+  eslint:
+    name: Web (React) — ESLint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npx eslint src/ --max-warnings=0

@@ -82,6 +82,15 @@ export default function Login() {
             </button>
           </form>
 
+          <div className="flex justify-between text-sm mt-4">
+            <Link to="/forgot-password" className="text-brand-600 dark:text-brand-400 font-medium hover:underline">
+              Esqueci minha senha
+            </Link>
+            <Link to="/recover-email" className="text-brand-600 dark:text-brand-400 font-medium hover:underline">
+              Esqueci meu email
+            </Link>
+          </div>
+
           <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-6">
             Não tem uma conta?{' '}
             <Link to="/register" className="text-brand-600 dark:text-brand-400 font-medium hover:underline">

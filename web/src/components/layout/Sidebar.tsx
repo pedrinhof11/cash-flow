@@ -20,6 +20,7 @@ import {
   Target,
   Heart,
   BarChart3,
+  UserCircle,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -34,6 +35,7 @@ const navItems = [
   { to: '/debts', icon: TrendingDown, label: 'Dívidas' },
   { to: '/financial-health', icon: Heart, label: 'Saúde Financeira' },
   { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+  { to: '/profile', icon: UserCircle, label: 'Perfil' },
 ]
 
 interface SidebarProps {

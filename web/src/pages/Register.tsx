@@ -11,6 +11,7 @@ export default function Register() {
   const { theme, toggle } = useThemeStore()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [error, setError] = useState('')
@@ -23,7 +24,7 @@ export default function Register() {
       return
     }
     try {
-      await register.mutateAsync({ name, email, password, password_confirmation: confirm })
+      await register.mutateAsync({ name, email, phone, password, password_confirmation: confirm })
     } catch (err: any) {
       setError(err.response?.data?.message || 'Erro ao criar conta')
     }
@@ -82,6 +83,20 @@ export default function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent dark:placeholder-gray-500"
                 placeholder="voce@exemplo.com"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="reg-phone" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">
+                Telefone <span className="text-gray-400 font-normal">(opcional)</span>
+              </label>
+              <input
+                id="reg-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                className="w-full rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent dark:placeholder-gray-500"
+                placeholder="(11) 99999-9999"
               />
             </div>
 

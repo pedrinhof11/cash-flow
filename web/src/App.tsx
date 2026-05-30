@@ -6,6 +6,10 @@ import Layout from './components/layout/Layout'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Profile from './pages/Profile'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import RecoverEmail from './pages/RecoverEmail'
 import Transactions from './pages/Transactions'
 import Accounts from './pages/Accounts'
 import Budgets from './pages/Budgets'
@@ -47,6 +51,9 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/recover-email" element={<RecoverEmail />} />
       <Route
         path="/"
         element={
@@ -57,6 +64,7 @@ function AppRoutes() {
       >
         <Route index element={<Navigate to="/dashboard" replace />} />
         <Route path="dashboard" element={<Dashboard />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="transactions" element={<Transactions />} />
         <Route path="accounts" element={<Accounts />} />
         <Route path="budgets" element={<Budgets />} />

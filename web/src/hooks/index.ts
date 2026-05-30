@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { authService, accountService, categoryService, transactionService, budgetService, recurringTransactionService, debtService, savingsGoalService, financialHealthService, analyticsService } from '../services'
+import { authService, profileService, deviceService, accountService, categoryService, transactionService, budgetService, recurringTransactionService, debtService, savingsGoalService, financialHealthService, analyticsService } from '../services'
 
 export function useAuth() {
   const { setUser, logout: clearAuth } = useAuthStore()
@@ -17,8 +17,8 @@ export function useAuth() {
   })
 
   const registerMutation = useMutation({
-    mutationFn: ({ name, email, password, password_confirmation }: { name: string; email: string; password: string; password_confirmation: string }) =>
-      authService.register(name, email, password, password_confirmation),
+    mutationFn: ({ name, email, phone, password, password_confirmation }: { name: string; email: string; phone?: string; password: string; password_confirmation: string }) =>
+      authService.register(name, email, phone, password, password_confirmation),
     onSuccess: (data) => {
       setUser(data.user)
       navigate('/dashboard')
@@ -56,6 +56,62 @@ export function useCheckAuth() {
   }, [query.isSuccess, query.isError, query.data, setUser, setLoading])
 
   return query
+}
+
+export function useUpdateProfile() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: profileService.updateProfile,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ['auth-me'] })
+    },
+  })
+}
+
+export function useUpdatePassword() {
+  return useMutation({ mutationFn: profileService.updatePassword })
+}
+
+export function useChangeEmail() {
+  return useMutation({ mutationFn: profileService.changeEmail })
+}
+
+export function useVerifyEmailChange() {
+  return useMutation({ mutationFn: (token: string) => profileService.verifyEmailChange(token) })
+}
+
+export function useSendPhoneCode() {
+  return useMutation({ mutationFn: profileService.sendPhoneCode })
+}
+
+export function useConfirmPhone() {
+  return useMutation({ mutationFn: (code: string) => profileService.confirmPhone(code) })
+}
+
+export function useForgotPassword() {
+  return useMutation({ mutationFn: (email: string) => profileService.forgotPassword(email) })
+}
+
+export function useResetPassword() {
+  return useMutation({ mutationFn: profileService.resetPassword })
+}
+
+export function useRecoverEmail() {
+  return useMutation({ mutationFn: (phone: string) => profileService.recoverEmail(phone) })
+}
+
+export function useDevices() {
+  return useQuery({ queryKey: ['devices'], queryFn: deviceService.list })
+}
+
+export function useRegisterDevice() {
+  const qc = useQueryClient()
+  return useMutation({ mutationFn: deviceService.register, onSuccess: () => qc.invalidateQueries({ queryKey: ['devices'] }) })
+}
+
+export function useUnregisterDevice() {
+  const qc = useQueryClient()
+  return useMutation({ mutationFn: deviceService.unregister, onSuccess: () => qc.invalidateQueries({ queryKey: ['devices'] }) })
 }
 
 export function useAccounts() {

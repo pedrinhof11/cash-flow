@@ -2,6 +2,20 @@ export interface User {
   id: number;
   name: string;
   email: string;
+  phone: string | null;
+  phone_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Device {
+  id: number;
+  user_id: number;
+  platform: string;
+  push_token: string | null;
+  device_name: string | null;
+  is_active: boolean;
+  last_used_at: string | null;
   created_at: string;
   updated_at: string;
 }

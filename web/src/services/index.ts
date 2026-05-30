@@ -1,10 +1,10 @@
 import api, { getCsrfCookie } from '../lib/api'
-import type { User, Account, Category, Transaction, Budget, RecurringTransaction, TransactionsSummary, BudgetCurrent, Debt, DebtSimulationResult, SavingsGoal, FinancialIndicators, FinancialScore, NetWorthEntry, ProjectionEntry, CategorizationResult } from '../types'
+import type { User, Account, Category, Transaction, Budget, RecurringTransaction, TransactionsSummary, BudgetCurrent, Debt, DebtSimulationResult, SavingsGoal, FinancialIndicators, FinancialScore, NetWorthEntry, ProjectionEntry, CategorizationResult, Device } from '../types'
 
 export const authService = {
-  async register(name: string, email: string, password: string, password_confirmation: string) {
+  async register(name: string, email: string, phone: string | undefined, password: string, password_confirmation: string) {
     await getCsrfCookie()
-    const { data } = await api.post<{ user: User }>('/auth/register', { name, email, password, password_confirmation })
+    const { data } = await api.post<{ user: User }>('/auth/register', { name, email, phone, password, password_confirmation })
     return data
   },
   async login(email: string, password: string) {
@@ -87,6 +87,34 @@ export const analyticsService = {
 export const financialHealthService = {
   indicators: () => api.get<{ indicators: FinancialIndicators }>('/financial-health/indicators').then((r) => r.data.indicators),
   score: () => api.get<{ score: FinancialScore }>('/financial-health/score').then((r) => r.data.score),
+}
+
+export const profileService = {
+  updateProfile: (data: { name: string; phone?: string | null }) =>
+    api.put<{ user: User }>('/auth/profile', data).then((r) => r.data.user),
+  updatePassword: (data: { current_password: string; new_password: string; new_password_confirmation: string }) =>
+    api.put('/auth/password', data),
+  changeEmail: (data: { email: string }) =>
+    api.post('/auth/email', data),
+  verifyEmailChange: (token: string) =>
+    api.get('/auth/email/verify', { params: { token } }),
+  sendPhoneCode: () =>
+    api.get('/auth/phone/send-code'),
+  confirmPhone: (code: string) =>
+    api.post('/auth/phone/confirm', { code }),
+  forgotPassword: (email: string) =>
+    api.post('/auth/forgot-password', { email }),
+  resetPassword: (data: { email: string; token: string; password: string; password_confirmation: string }) =>
+    api.post('/auth/reset-password', data),
+  recoverEmail: (phone: string) =>
+    api.post<{ email: string }>('/auth/recover-email', { phone }).then((r) => r.data.email),
+}
+
+export const deviceService = {
+  list: () => api.get<{ devices: Device[] }>('/devices').then((r) => r.data.devices),
+  register: (data: { platform: string; push_token?: string; device_name?: string }) =>
+    api.post<{ device: Device }>('/devices', data).then((r) => r.data.device),
+  unregister: (id: number) => api.delete(`/devices/${id}`),
 }
 
 export const debtService = {

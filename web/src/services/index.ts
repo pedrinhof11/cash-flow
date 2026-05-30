@@ -1,5 +1,5 @@
 import api, { getCsrfCookie } from '../lib/api'
-import type { User, Account, Category, Transaction, Budget, RecurringTransaction, TransactionsSummary, BudgetCurrent, Debt, DebtSimulationResult } from '../types'
+import type { User, Account, Category, Transaction, Budget, RecurringTransaction, TransactionsSummary, BudgetCurrent, Debt, DebtSimulationResult, SavingsGoal, FinancialIndicators, FinancialScore, NetWorthEntry, ProjectionEntry, CategorizationResult } from '../types'
 
 export const authService = {
   async register(name: string, email: string, password: string, password_confirmation: string) {
@@ -22,7 +22,7 @@ export const authService = {
 }
 
 export const accountService = {
-  list: () => api.get<Account[]>('/accounts').then((r) => r.data),
+  list: () => api.get<{ accounts: Account[] }>('/accounts').then((r) => r.data.accounts),
   get: (id: number) => api.get<Account>(`/accounts/${id}`).then((r) => r.data),
   create: (data: Partial<Account>) => api.post<Account>('/accounts', data).then((r) => r.data),
   update: (id: number, data: Partial<Account>) => api.put<Account>(`/accounts/${id}`, data).then((r) => r.data),
@@ -30,7 +30,7 @@ export const accountService = {
 }
 
 export const categoryService = {
-  list: () => api.get<Category[]>('/categories').then((r) => r.data),
+  list: () => api.get<{ categories: Category[] }>('/categories').then((r) => r.data.categories),
   get: (id: number) => api.get<Category>(`/categories/${id}`).then((r) => r.data),
   create: (data: Partial<Category>) => api.post<Category>('/categories', data).then((r) => r.data),
   update: (id: number, data: Partial<Category>) => api.put<Category>(`/categories/${id}`, data).then((r) => r.data),
@@ -64,6 +64,28 @@ export const recurringTransactionService = {
   update: (id: number, data: Partial<RecurringTransaction>) => api.put<RecurringTransaction>(`/recurring/${id}`, data).then((r) => r.data),
   delete: (id: number) => api.delete(`/recurring/${id}`),
   skip: (id: number) => api.post<RecurringTransaction>(`/recurring/${id}/skip`).then((r) => r.data),
+}
+
+export const savingsGoalService = {
+  list: () => api.get<{ savings_goals: SavingsGoal[] }>('/savings-goals').then((r) => r.data.savings_goals),
+  get: (id: number) => api.get<{ savings_goal: SavingsGoal }>(`/savings-goals/${id}`).then((r) => r.data.savings_goal),
+  create: (data: Partial<SavingsGoal>) => api.post<{ savings_goal: SavingsGoal }>('/savings-goals', data).then((r) => r.data.savings_goal),
+  update: (id: number, data: Partial<SavingsGoal>) => api.put<{ savings_goal: SavingsGoal }>(`/savings-goals/${id}`, data).then((r) => r.data.savings_goal),
+  delete: (id: number) => api.delete(`/savings-goals/${id}`),
+}
+
+export const analyticsService = {
+  netWorth: (months = 12) =>
+    api.get<{ net_worth: NetWorthEntry[] }>('/analytics/net-worth', { params: { months } }).then((r) => r.data.net_worth),
+  projections: (data: { months?: number; scenario?: string }) =>
+    api.post<{ projections: ProjectionEntry[] }>('/analytics/projections', data).then((r) => r.data.projections),
+  categorize: (description: string) =>
+    api.post<{ categorization: CategorizationResult }>('/analytics/categorize', { description }).then((r) => r.data.categorization),
+}
+
+export const financialHealthService = {
+  indicators: () => api.get<{ indicators: FinancialIndicators }>('/financial-health/indicators').then((r) => r.data.indicators),
+  score: () => api.get<{ score: FinancialScore }>('/financial-health/score').then((r) => r.data.score),
 }
 
 export const debtService = {

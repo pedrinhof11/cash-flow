@@ -49,19 +49,20 @@ Ajudar o usuário no controle de finanças pessoais e ser uma ferramenta que aux
 
 ---
 
-### Fase 3 — Saúde financeira e metas 📅
+### Fase 3 — Saúde financeira e metas ✅
 
-- [ ] Metas de economia (`savings_goals`)
-- [ ] Indicadores: debt-to-income ratio, emergency fund, gasto por categoria como % da renda
-- [ ] Score de saúde financeira (0-100)
+- [x] Metas de economia (`savings_goals`) — CRUD completo backend + frontend
+- [x] Indicadores: debt-to-income ratio, emergency fund, gasto por categoria como % da renda
+- [x] Score de saúde financeira (0-100) com 4 componentes ponderados
+- [x] Página `/financial-health` com score circular animado e cards de indicadores
 
 ---
 
-### Fase 4 — Analytics e projeções 📅
+### Fase 4 — Analytics e projeções ✅
 
-- [ ] Evolução do patrimônio líquido (ativos - passivos) ao longo do tempo
-- [ ] Projeção "Onde você estará em N meses" com cenários atual/otimista/pessimista
-- [ ] Categorização inteligente de gastos por descrição
+- [x] Evolução do patrimônio líquido (ativos - passivos) ao longo do tempo
+- [x] Projeção "Onde você estará em N meses" com cenários atual/otimista/pessimista
+- [x] Categorização inteligente de gastos por descrição
 
 ---
 

@@ -289,10 +289,13 @@ Consulte [PLANNING.md](./PLANNING.md) para o roadmap completo.
 ### Fase 2 — Dívidas (✅ concluído)
 - Modelo de dívidas + Snowball/Avalanche + simulador
 
-### Fase 3 — Saúde financeira (📅 planejado)
-- Metas, indicadores, score financeiro
+### Fase 3 — Saúde financeira (✅ concluído)
+- Metas de economia (SavingsGoal) — CRUD backend + frontend
+- Indicadores financeiros: debt-to-income, emergency fund, gastos por categoria, taxa de economia
+- Score financeiro (0-100) com 4 componentes e grading (excellent/critical)
+- Página de Saúde Financeira com score circular, cards de indicadores, gráfico de gastos
 
-### Fase 4 — Analytics (📅 planejado)
+### Fase 4 — Analytics (✅ concluído)
 - Patrimônio líquido, projeções, categorização inteligente
 
 ## Decisões de arquitetura

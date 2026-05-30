@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
-import { authService, accountService, categoryService, transactionService, budgetService, recurringTransactionService, debtService } from '../services'
+import { authService, accountService, categoryService, transactionService, budgetService, recurringTransactionService, debtService, savingsGoalService, financialHealthService, analyticsService } from '../services'
 
 export function useAuth() {
   const { setUser, logout: clearAuth } = useAuthStore()
@@ -228,4 +228,46 @@ export function useDeleteDebt() {
 
 export function useDebtSimulation() {
   return useMutation({ mutationFn: debtService.calculate })
+}
+
+export function useSavingsGoals() {
+  return useQuery({ queryKey: ['savings-goals'], queryFn: savingsGoalService.list })
+}
+
+export function useCreateSavingsGoal() {
+  const qc = useQueryClient()
+  return useMutation({ mutationFn: savingsGoalService.create, onSuccess: () => qc.invalidateQueries({ queryKey: ['savings-goals'] }) })
+}
+
+export function useUpdateSavingsGoal() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: Partial<any> }) => savingsGoalService.update(id, data),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['savings-goals'] }),
+  })
+}
+
+export function useDeleteSavingsGoal() {
+  const qc = useQueryClient()
+  return useMutation({ mutationFn: savingsGoalService.delete, onSuccess: () => qc.invalidateQueries({ queryKey: ['savings-goals'] }) })
+}
+
+export function useFinancialIndicators() {
+  return useQuery({ queryKey: ['financial-indicators'], queryFn: financialHealthService.indicators })
+}
+
+export function useFinancialScore() {
+  return useQuery({ queryKey: ['financial-score'], queryFn: financialHealthService.score })
+}
+
+export function useNetWorth(months = 12) {
+  return useQuery({ queryKey: ['net-worth', months], queryFn: () => analyticsService.netWorth(months) })
+}
+
+export function useProjections() {
+  return useMutation({ mutationFn: analyticsService.projections })
+}
+
+export function useCategorize() {
+  return useMutation({ mutationFn: analyticsService.categorize })
 }

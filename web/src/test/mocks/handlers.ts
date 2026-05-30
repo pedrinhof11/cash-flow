@@ -97,7 +97,7 @@ export const handlers = [
 
   http.get('/api/auth/me', () => HttpResponse.json({ user: mockUser })),
 
-  http.get('/api/accounts', () => HttpResponse.json(mockAccounts)),
+  http.get('/api/accounts', () => HttpResponse.json({ accounts: mockAccounts })),
 
   http.post('/api/accounts', async ({ request }) => {
     const body = await request.json() as Record<string, unknown>
@@ -111,7 +111,7 @@ export const handlers = [
 
   http.delete('/api/accounts/:id', () => new HttpResponse(null, { status: 204 })),
 
-  http.get('/api/categories', () => HttpResponse.json(mockCategories)),
+  http.get('/api/categories', () => HttpResponse.json({ categories: mockCategories })),
 
   http.post('/api/categories', async ({ request }) => {
     const body = await request.json() as Record<string, string>

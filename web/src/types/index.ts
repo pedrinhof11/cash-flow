@@ -132,6 +132,67 @@ export interface DebtSimulationResult {
   schedule: { month: number; creditor: string; paid_off: boolean; interest_paid: number }[];
 }
 
+export interface SavingsGoal {
+  id: number;
+  user_id: number;
+  name: string;
+  target_amount: number;
+  current_amount: number;
+  progress: number;
+  remaining_amount: number;
+  deadline: string;
+  category_id: number | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface FinancialIndicators {
+  debt_to_income_ratio: number;
+  emergency_fund_months: number;
+  category_spending: { category_id: number | null; category_name: string; amount: number; percentage: number }[];
+  monthly_savings_rate: number;
+  total_monthly_income: number;
+  total_monthly_expenses: number;
+  total_debt: number;
+  total_balance: number;
+}
+
+export interface FinancialScore {
+  score: number;
+  grade: 'excellent' | 'good' | 'fair' | 'poor' | 'critical';
+  components: {
+    name: string;
+    label: string;
+    weight: number;
+    score: number;
+    max_score: number;
+    status: 'good' | 'alert' | 'critical';
+  }[];
+}
+
+export interface NetWorthEntry {
+  date: string;
+  total_assets: number;
+  total_debts: number;
+  net_worth: number;
+}
+
+export interface ProjectionEntry {
+  month: number;
+  total_assets: number;
+  total_debts: number;
+  net_worth: number;
+  monthly_income: number;
+  monthly_expenses: number;
+}
+
+export interface CategorizationResult {
+  suggested_category_id: number | null;
+  suggested_category_name: string | null;
+  confidence: number;
+}
+
 export interface BudgetCurrent {
   id: number;
   category: Category;

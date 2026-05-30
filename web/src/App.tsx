@@ -12,6 +12,9 @@ import Budgets from './pages/Budgets'
 import Categories from './pages/Categories'
 import Recurring from './pages/Recurring'
 import Debts from './pages/Debts'
+import SavingsGoals from './pages/SavingsGoals'
+import FinancialHealth from './pages/FinancialHealth'
+import Analytics from './pages/Analytics'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -59,7 +62,10 @@ function AppRoutes() {
         <Route path="budgets" element={<Budgets />} />
         <Route path="categories" element={<Categories />} />
         <Route path="recurring" element={<Recurring />} />
+        <Route path="savings-goals" element={<SavingsGoals />} />
         <Route path="debts" element={<Debts />} />
+        <Route path="financial-health" element={<FinancialHealth />} />
+        <Route path="analytics" element={<Analytics />} />
       </Route>
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>

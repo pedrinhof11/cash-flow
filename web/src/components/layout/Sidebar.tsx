@@ -17,6 +17,9 @@ import {
   ChevronRight,
   ArrowLeftRight,
   TrendingDown,
+  Target,
+  Heart,
+  BarChart3,
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -27,7 +30,10 @@ const navItems = [
   { to: '/budgets', icon: PiggyBank, label: 'Orçamentos' },
   { to: '/categories', icon: Tags, label: 'Categorias' },
   { to: '/recurring', icon: Repeat, label: 'Recorrentes' },
+  { to: '/savings-goals', icon: Target, label: 'Metas' },
   { to: '/debts', icon: TrendingDown, label: 'Dívidas' },
+  { to: '/financial-health', icon: Heart, label: 'Saúde Financeira' },
+  { to: '/analytics', icon: BarChart3, label: 'Analytics' },
 ]
 
 interface SidebarProps {

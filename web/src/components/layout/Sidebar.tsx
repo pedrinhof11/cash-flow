@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useAuthStore } from '../../store/authStore'
 import { useAuth } from '../../hooks'
 import { useThemeStore } from '../../store/themeStore'
@@ -45,12 +45,10 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
   const user = useAuthStore((s) => s.user)
   const { logout } = useAuth()
   const { theme, toggle } = useThemeStore()
-  const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
 
-  const handleLogout = async () => {
-    await logout.mutateAsync()
-    navigate('/login')
+  const handleLogout = () => {
+    logout.mutate()
   }
 
   const sidebarContent = (

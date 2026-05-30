@@ -27,9 +27,9 @@ export function useAuth() {
 
   const logoutMutation = useMutation({
     mutationFn: () => authService.logout(),
-    onSuccess: () => {
+    onSettled: () => {
       clearAuth()
-      navigate('/login')
+      navigate('/login', { replace: true })
     },
   })
 

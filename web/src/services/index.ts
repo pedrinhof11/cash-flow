@@ -13,6 +13,7 @@ export const authService = {
     return data
   },
   async logout() {
+    await getCsrfCookie()
     await api.post('/auth/logout')
   },
   async me() {
